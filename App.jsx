@@ -8,7 +8,7 @@ export default function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
-        <LoggedInStack />
+        <LoggedOutStack />
       </NavigationContainer>
     </PaperProvider>
   );
