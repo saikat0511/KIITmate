@@ -1,11 +1,9 @@
-import { React, useState } from 'react';
-import { TextInput } from 'react-native-paper';
+import {React, useState} from 'react';
+import {TextInput} from 'react-native-paper';
 
 export default function LoginPasswordField(props) {
   const [visible, updateVisibility] = useState(true);
-  const {
-    disabled, onChangeText, style, rippleColor,
-  } = props;
+  const {disabled, onChangeText, style, rippleColor, value} = props;
 
   const onPressHandler = () => {
     updateVisibility(!visible);
@@ -19,13 +17,14 @@ export default function LoginPasswordField(props) {
       label="Password"
       secureTextEntry={visible}
       style={style}
-      right={(
+      right={
         <TextInput.Icon
           icon={visible ? 'eye-off' : 'eye'}
           rippleColor={rippleColor}
           onPress={onPressHandler}
         />
-      )}
+      }
+      value={value}
     />
   );
 }
