@@ -10,8 +10,11 @@ export const AuthProvider = ({children}) => {
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // console.log(cookieValid);
-  // console.log(details.name);
+  const y = storage.getString('year'),
+    s = storage.getString('session');
+  const [year, setYear] = useState(y ? y : '2023');
+  const [session, setSession] = useState(s ? s : 'Autumn');
+
   useEffect(() => {
     const checkValidity = async () => {
       const url =
@@ -36,14 +39,17 @@ export const AuthProvider = ({children}) => {
 
         if (response.status === 200) {
           setCookieValid(true);
+          // console.log(data);
           setDetails(data);
         } else {
+          // console.log(data);
           setCookieValid(false);
         }
         // console.log(cookieValid);
       } catch (err) {
         // Handle errors, but do not set cookieValid to true in case of an error
         setCookieValid(false);
+        // console.log(err);
       }
     };
 
@@ -58,6 +64,10 @@ export const AuthProvider = ({children}) => {
         setFormDisabled,
         cookieValid,
         setCookieValid,
+        year,
+        setYear,
+        session,
+        setSession,
       }}>
       {children}
     </AuthContext.Provider>

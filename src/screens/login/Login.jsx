@@ -39,6 +39,9 @@ export default function Login({navigation}) {
   const PrimaryRippleColor = isDarkMode ? '#00000080' : '#ffffff80';
   const SecondaryrippleColor = isDarkMode ? '#ffffff66' : '#00000066';
 
+  // console.log(theme.colors.background);
+  // console.log(PrimaryRippleColor);
+  // console.log(SecondaryrippleColor);
   const onDismissSnackBar = () => setSnackbarVisiblility(false);
 
   const onPressHandler = async () => {

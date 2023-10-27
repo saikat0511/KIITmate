@@ -1,4 +1,4 @@
-import {React, useEffect, useState} from 'react';
+import {React, useContext, useEffect, useState} from 'react';
 import {
   FlatList,
   useColorScheme,
@@ -12,6 +12,10 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 
 import storage from '../../helpers/mmkv';
 import {black} from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+import {AuthContext} from '../auth/AuthContext';
+import Settings from '../../components/Settings';
+import Loading from '../../components/Loading';
+
 export default function Home({navigation}) {
   const [details, setDetails] = useState(null);
   const colorScheme = useColorScheme();
@@ -19,6 +23,12 @@ export default function Home({navigation}) {
   const theme = isDarkMode ? MD3DarkTheme : MD3LightTheme;
   const PrimaryRippleColor = isDarkMode ? '#00000080' : '#ffffff80';
   const SecondaryrippleColor = isDarkMode ? '#ffffff66' : '#00000066';
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const {year, session} = useContext(AuthContext);
+
+  const [infoNavigated, setInfoNavigated] = useState(false);
 
   useEffect(() => {
     const checkValidity = async () => {
@@ -29,10 +39,12 @@ export default function Home({navigation}) {
       headers.append('Content-Type', 'application/json');
       const cookie = storage.getString('cookie');
       const newCookie = cookie.slice(0, -1);
+
       const requestData = newCookie.concat(
-        ',"year": 2022, "session": "Autumn"}',
+        `,"year": ${year}, "session": "${session}"}`,
       );
 
+      console.log(requestData);
       const requestOptions = {
         method: 'POST',
         headers,
@@ -43,6 +55,7 @@ export default function Home({navigation}) {
       try {
         const response = await fetch(url, requestOptions);
         const data = await response.json();
+        setLoading(false);
         // console.log(data);
 
         if (response.status === 200) {
@@ -59,10 +72,11 @@ export default function Home({navigation}) {
     };
 
     checkValidity();
-  }, []);
+  }, [year, session]);
 
+  if (loading) return <Loading />;
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'grey'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#1c1b1f'}}>
       <FlatList
         data={details?.faculty} // Include faculty names in the data array
         keyExtractor={(item, index) => index.toString()}
