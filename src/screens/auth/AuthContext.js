@@ -1,24 +1,23 @@
-import React, {createContext, useState, useEffect} from 'react';
+import React, { createContext, useState, useEffect } from 'react';
+import { setMilliseconds } from 'date-fns';
 import storage from '../../helpers/mmkv';
-import {setMilliseconds} from 'date-fns';
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
+export function AuthProvider({ children }) {
   const [formDisabled, setFormDisabled] = useState(false);
   const [cookieValid, setCookieValid] = useState(false);
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const y = storage.getString('year'),
-    s = storage.getString('session');
-  const [year, setYear] = useState(y ? y : '2023');
-  const [session, setSession] = useState(s ? s : 'Autumn');
+  const y = storage.getString('year');
+  const s = storage.getString('session');
+  const [year, setYear] = useState(y || '2023');
+  const [session, setSession] = useState(s || 'Autumn');
 
   useEffect(() => {
     const checkValidity = async () => {
-      const url =
-        'https://hj7xp13cu8.execute-api.ap-south-1.amazonaws.com/Prod/api/v1/info';
+      const url = 'https://hj7xp13cu8.execute-api.ap-south-1.amazonaws.com/Prod/api/v1/info';
 
       const headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -68,8 +67,9 @@ export const AuthProvider = ({children}) => {
         setYear,
         session,
         setSession,
-      }}>
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
-};
+}
