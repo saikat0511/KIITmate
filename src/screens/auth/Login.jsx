@@ -4,22 +4,21 @@ import {
   Text, Snackbar, MD3DarkTheme, MD3LightTheme,
 } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { differenceInMinutes } from 'date-fns';
-import storage from '../../helpers/mmkv';
+// import { differenceInMinutes } from 'date-fns';
+import useLogin from '../../hooks/useLogin';
 import LoginPasswordField from '../../components/LoginPasswordField';
 import LoginUserIDField from '../../components/LoginUserIDField';
 import LoginButton from '../../components/LoginButton';
 import KIITlogo from '../../assets/KIIT_logo.svg';
 
-export default function LoginScreen() {
-  console.log(differenceInMinutes(new Date('2023-09-17T15:54:56.245Z'), new Date()));
-  const [loadingState, updateLoadingState] = useState(false);
-  const [disabledState, updateDisabledState] = useState(false);
-  const [snackbarVisiblity, setSnackbarVisiblility] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+export default function Login() {
+  // console.log(differenceInMinutes(new Date('2023-09-17T15:54:56.245Z'), new Date()));
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const areAllFieldsFilled = (username !== '') && (password !== '');
+  const {
+    login, error, setError, isLoading,
+  } = useLogin();
 
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme === 'dark';
@@ -27,50 +26,14 @@ export default function LoginScreen() {
   const PrimaryRippleColor = isDarkMode ? '#00000080' : '#ffffff80';
   const SecondaryrippleColor = isDarkMode ? '#ffffff66' : '#00000066';
 
-  function setFormDisabledState(state) {
-    updateLoadingState(state);
-    updateDisabledState(state);
-  }
-
-  const onDismissSnackBar = () => setSnackbarVisiblility(false);
+  const onDismissSnackBar = () => setError(null);
 
   const onPressHandler = async () => {
     if (!areAllFieldsFilled) {
-      setSnackbarMessage('Enter UserID and Password');
-      setSnackbarVisiblility(true);
+      setError('Enter UserID and Password');
       return;
     }
-    setSnackbarVisiblility(false);
-    setFormDisabledState(true);
-    const url = 'https://hj7xp13cu8.execute-api.ap-south-1.amazonaws.com/Prod/api/v1/cookie';
-
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    const raw = JSON.stringify({
-      username,
-      password,
-    });
-
-    const requestOptions = {
-      method: 'POST',
-      headers,
-      body: raw,
-      redirect: 'follow',
-    };
-
-    const response = await fetch(url, requestOptions);
-    if (!response.ok) {
-      if (response.status === 401) setSnackbarMessage('Incorrect UserID / Password');
-      setSnackbarVisiblility(true);
-      setFormDisabledState(false);
-    } else {
-      const data = await response.json();
-      storage.set('username', username);
-      storage.set('password', password);
-      storage.set('timestamp', String(new Date()));
-      console.log(data);
-    }
+    await login(username, password);
   };
 
   return (
@@ -104,20 +67,20 @@ export default function LoginScreen() {
           </Text>
           <View style={{ width: '85%', maxWidth: 500 }}>
             <LoginUserIDField
-              disabled={disabledState}
+              disabled={isLoading}
               onChangeText={(newText) => setUsername(Number(newText))}
               style={{ marginBottom: 15 }}
             />
             <LoginPasswordField
-              disabled={disabledState}
+              disabled={isLoading}
               onChangeText={(newText) => setPassword(newText)}
               rippleColor={SecondaryrippleColor}
               style={{ marginBottom: 25 }}
             />
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
               <LoginButton
-                loading={loadingState}
-                disabled={disabledState}
+                loading={isLoading}
+                disabled={isLoading}
                 rippleColor={PrimaryRippleColor}
                 onPress={onPressHandler}
               />
@@ -125,11 +88,11 @@ export default function LoginScreen() {
           </View>
         </View>
         <Snackbar
-          visible={snackbarVisiblity}
+          visible={!!error}
           onDismiss={onDismissSnackBar}
           duration={2750}
         >
-          {snackbarMessage}
+          {error}
         </Snackbar>
       </ScrollView>
     </SafeAreaView>

@@ -17,8 +17,13 @@
         "react-native"
     ],
     "rules": {
+        "react/jsx-no-constructed-context-values": "off",
         "react/prop-types": "off",
-        "react/destructuring-assignment": "off",
-        "default-case": "off"
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+              "devDependencies": ["*config.{ts,tsx,js,jsx}"]
+            }
+        ]
     }
 }
