@@ -1,9 +1,8 @@
 import { React, useState } from 'react';
-import { ScrollView, View, useColorScheme } from 'react-native';
-import {
-  Text, Snackbar, MD3DarkTheme, MD3LightTheme,
-} from 'react-native-paper';
+import { ScrollView, View } from 'react-native';
+import { Text, Snackbar } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import useColors from '../../hooks/useColorScheme';
 // import { differenceInMinutes } from 'date-fns';
 import useLogin from '../../hooks/useLogin';
 import LoginPasswordField from '../../components/LoginPasswordField';
@@ -20,11 +19,7 @@ export default function Login() {
     login, error, setError, isLoading,
   } = useLogin();
 
-  const colorScheme = useColorScheme();
-  const isDarkMode = colorScheme === 'dark';
-  const theme = isDarkMode ? MD3DarkTheme : MD3LightTheme;
-  const PrimaryRippleColor = isDarkMode ? '#00000080' : '#ffffff80';
-  const SecondaryrippleColor = isDarkMode ? '#ffffff66' : '#00000066';
+  const { theme, primaryRippleColor, secondaryrippleColor } = useColors();
 
   const onDismissSnackBar = () => setError(null);
 
@@ -74,14 +69,14 @@ export default function Login() {
             <LoginPasswordField
               disabled={isLoading}
               onChangeText={(newText) => setPassword(newText)}
-              rippleColor={SecondaryrippleColor}
+              rippleColor={secondaryrippleColor}
               style={{ marginBottom: 25 }}
             />
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
               <LoginButton
                 loading={isLoading}
                 disabled={isLoading}
-                rippleColor={PrimaryRippleColor}
+                rippleColor={primaryRippleColor}
                 onPress={onPressHandler}
               />
             </View>
