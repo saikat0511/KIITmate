@@ -7,7 +7,10 @@ const useColors = () => {
   const theme = isDarkMode ? MD3DarkTheme : MD3LightTheme;
   const primaryRippleColor = isDarkMode ? '#00000080' : '#ffffff80';
   const secondaryrippleColor = isDarkMode ? '#ffffff66' : '#00000066';
-  return { theme, primaryRippleColor, secondaryrippleColor };
+  const progressBackgroundColor = isDarkMode ? '#ffffff1a' : '#0000001a';
+  return {
+    theme, primaryRippleColor, secondaryrippleColor, progressBackgroundColor,
+  };
 };
 
 export default useColors;

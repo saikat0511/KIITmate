@@ -19,6 +19,7 @@
     "rules": {
         "react/jsx-no-constructed-context-values": "off",
         "react/prop-types": "off",
+        "no-new-object": "off",
         "import/no-extraneous-dependencies": [
             "error",
             {
