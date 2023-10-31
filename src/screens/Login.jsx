@@ -6,7 +6,7 @@ import useLogin from '../hooks/useLogin';
 import LoginPasswordField from '../components/LoginPasswordField';
 import LoginUserIDField from '../components/LoginUserIDField';
 import LoginButton from '../components/LoginButton';
-import KIITlogo from '../../assets/KIIT_logo.svg';
+import KIITlogo from '../assets/KIIT_logo.svg';
 
 export default function Login() {
   const [username, setUsername] = useState('');
