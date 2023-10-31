@@ -12,7 +12,7 @@ export default function App() {
     <AuthContextProvider>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={theme.colors.background}
+        backgroundColor="transparent"
       />
       <PaperProvider theme={theme}>
         <NavigationContainer>
