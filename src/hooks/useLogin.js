@@ -30,7 +30,7 @@ const useLogin = () => {
       storage.set('timestamp', String(new Date()));
 
       // update auth context
-      dispatch({ type: 'LOGIN', payload: json });
+      dispatch({ type: 'LOGIN', payload: { ...json, id: username } });
     }
     setIsLoading(false);
   };

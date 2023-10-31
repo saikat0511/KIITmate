@@ -1,6 +1,4 @@
-import {
-  React, createContext, useEffect, useReducer,
-} from 'react';
+import React, { createContext, useEffect, useReducer } from 'react';
 import storage from '../helpers/mmkv';
 
 export const AuthContext = createContext();
@@ -21,11 +19,15 @@ export function AuthContextProvider({ children }) {
 
   useEffect(() => {
     if (storage.contains('cookie')) {
-      dispatch({ type: 'LOGIN', payload: { cookie: storage.getString('cookie') } });
+      dispatch({
+        type: 'LOGIN',
+        payload: {
+          cookie: storage.getString('cookie'),
+          id: storage.getNumber('username'),
+        },
+      });
     }
   }, []);
-
-  // console.log(state);
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>

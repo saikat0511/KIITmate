@@ -10,7 +10,7 @@ export default function AttendanceContainer() {
   } = useAttendanceContext();
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, padding: '3%' }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, paddingHorizontal: '3%' }}>
       {
         isLoading && <ActivityIndicator size={60} />
       }

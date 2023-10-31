@@ -5,21 +5,19 @@ import { ATTENDANCE } from '../constants/endpoints';
 export const AttendanceContext = createContext();
 
 export function AttendanceContextProvider({ children }) {
-  const [yearSession, setYearSession] = useState(null);
+  const getInitialYearSession = () => {
+    const currentMonth = new Date().toLocaleString('en-US', { month: 'numeric' });
+    const currentyear = parseInt(new Date().toLocaleString('en-US', { year: 'numeric' }), 10);
+    if (currentMonth > 6) {
+      return { session: 'Autumn', year: currentyear };
+    }
+    return { session: 'Spring', year: currentyear - 1 };
+  };
+  const [yearSession, setYearSession] = useState(getInitialYearSession);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [attendance, setAttendance] = useState([]);
   const { user } = useAuthContext();
-
-  useEffect(() => {
-    const currentMonth = new Date().toLocaleString('en-US', { month: 'numeric' });
-    const currentyear = parseInt(new Date().toLocaleString('en-US', { year: 'numeric' }), 10);
-    if (currentMonth > 6) {
-      setYearSession({ session: 'Autumn', year: currentyear });
-    } else {
-      setYearSession({ session: 'Spring', year: currentyear - 1 });
-    }
-  }, []);
 
   useEffect(() => {
     if (yearSession) {
