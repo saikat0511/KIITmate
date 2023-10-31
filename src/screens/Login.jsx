@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Text, Snackbar } from 'react-native-paper';
-import useColors from '../../hooks/useColors';
-import useLogin from '../../hooks/useLogin';
-import LoginPasswordField from '../../components/LoginPasswordField';
-import LoginUserIDField from '../../components/LoginUserIDField';
-import LoginButton from '../../components/LoginButton';
+import useColors from '../hooks/useColors';
+import useLogin from '../hooks/useLogin';
+import LoginPasswordField from '../components/LoginPasswordField';
+import LoginUserIDField from '../components/LoginUserIDField';
+import LoginButton from '../components/LoginButton';
 import KIITlogo from '../../assets/KIIT_logo.svg';
 
 export default function Login() {
