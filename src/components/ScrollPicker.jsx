@@ -18,8 +18,9 @@ export default function ScrollPicker(props) {
       onScrollBeginDrag={onScroll}
       onScrollEndDrag={onScroll}
       initialSelectedIndex={initialSelectedIndex}
-      transparentItemRows={3}
+      transparentItemRows={2}
       width={width}
+      height={200}
       fontFamily={theme.fonts.titleLarge.fontFamily}
       fontSize={theme.fonts.titleLarge.fontSize}
       allItemsColor={theme.colors.onSurfaceVariant}

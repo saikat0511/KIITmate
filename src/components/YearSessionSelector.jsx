@@ -21,6 +21,7 @@ export default function YearSessionSelector() {
   const admissionYear = parseInt(`20${user.id.toString().slice(0, 2)}`, 10);
   const yearItems = [];
   for (let i = admissionYear; i <= currentyear; i += 1) {
+    if (i - admissionYear >= 5) break;
     const item = new Object();
     item.value = i;
     item.label = `${i.toString()}-${(i + 1).toString().slice(-2)}`;
@@ -68,28 +69,20 @@ export default function YearSessionSelector() {
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
           {/* <Dialog.Title>Alert</Dialog.Title> */}
-          <Dialog.Content>
-            {/* <Text variant="bodyMedium">This is simple dialog</Text> */}
-            <View style={{ flexDirection: 'row' }}>
-              <ScrollPicker
-                items={yearItems}
-                onScroll={({ index }) => setYearIndex(index)}
-                initialSelectedIndex={yearInitialIndex}
-                width="50%"
-              />
-              <ScrollPicker
-                items={sessionItems}
-                onScroll={({ index }) => setSessionIndex(index)}
-                initialSelectedIndex={sessionInitialIndex}
-                width="50%"
-              />
-            </View>
-            {/* <Text>
-                Selected item index
-                {' '}
-                {selectedItemIndex}
-              </Text> */}
-          </Dialog.Content>
+          <View style={{ flexDirection: 'row', paddingHorizontal: 24 }}>
+            <ScrollPicker
+              items={yearItems}
+              onScroll={({ index }) => setYearIndex(index)}
+              initialSelectedIndex={yearInitialIndex}
+              width="50%"
+            />
+            <ScrollPicker
+              items={sessionItems}
+              onScroll={({ index }) => setSessionIndex(index)}
+              initialSelectedIndex={sessionInitialIndex}
+              width="50%"
+            />
+          </View>
           <Dialog.Actions>
             <Button onPress={onPressHandler}>Done</Button>
           </Dialog.Actions>
