@@ -1,14 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Surface, Text } from 'react-native-paper';
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import AnimatedProgressWheel from 'react-native-progress-wheel';
 import useColors from '../hooks/useColors';
 
 export default function AttendanceCard(props) {
   const {
     subject, faculty, dayCount, presentCount, presentPercent,
   } = props;
-  const { theme, progressBackgroundColor } = useColors();
+  const { theme } = useColors();
   return (
     <Surface elevation={2} style={{ marginVertical: 7, padding: 15, borderRadius: 20 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -25,26 +25,27 @@ export default function AttendanceCard(props) {
             {parseInt(dayCount, 10)}
           </Text>
         </View>
-        <AnimatedCircularProgress
-          size={100}
-          width={15}
-          backgroundWidth={8}
-          fill={parseFloat(presentPercent)}
-          tintColor={theme.colors.primary}
-          lineCap="round"
-          rotation={0}
-          backgroundColor={progressBackgroundColor}
-        >
-          {
-            () => (
-              <Text variant="titleLarge">
-                {parseInt(presentPercent, 10) === 100 && 100}
-                {parseInt(presentPercent, 10) !== 100 && parseFloat(presentPercent).toFixed(1)}
-                %
-              </Text>
-            )
-          }
-        </AnimatedCircularProgress>
+        <View>
+          <AnimatedProgressWheel
+            size={100}
+            width={15}
+            progress={parseFloat(presentPercent, 10)}
+            color={theme.colors.primary}
+            backgroundColor={theme.colors.outlineVariant}
+            rotation="-90deg"
+            rounded
+          />
+          <View style={{
+            position: 'absolute', height: 100, width: 100, justifyContent: 'center', alignItems: 'center',
+          }}
+          >
+            <Text variant="titleMedium">
+              {parseInt(presentPercent, 10) === 100 && 100}
+              {parseInt(presentPercent, 10) !== 100 && parseFloat(presentPercent).toFixed(1)}
+              %
+            </Text>
+          </View>
+        </View>
       </View>
     </Surface>
   );

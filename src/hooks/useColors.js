@@ -7,7 +7,6 @@ const useColors = () => {
   const theme = isDarkMode ? MD3DarkTheme : MD3LightTheme;
   const primaryRippleColor = isDarkMode ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255, 255, 255, 0.4)';
   const secondaryrippleColor = isDarkMode ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)';
-  const progressBackgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
   const topGradientColors = isDarkMode ? [
     'rgba(49, 44, 56, 1)',
     'rgba(49, 44, 56, 0.9)',
@@ -36,7 +35,6 @@ const useColors = () => {
     isDarkMode,
     primaryRippleColor,
     secondaryrippleColor,
-    progressBackgroundColor,
     topGradientColors,
     bottomGradientColors,
   };
